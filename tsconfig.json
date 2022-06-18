@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "dobe": [
+        "./lib/index.ts"
+      ]
+    },
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "webworker"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmitHelpers": false,
+    "importHelpers": true,
+    "noResolve": false,
+    "noEmit": true,
+    "inlineSourceMap": false,
+    "declaration": true,
+    "outDir": "./umd",
+    "declarationDir": "./",
+    "jsx": "react"
+  },
+  "exclude": [
+    "node_modules",
+    "umd"
+  ],
+  "include": [
+    "lib",
+    "example"
+  ]
+}
