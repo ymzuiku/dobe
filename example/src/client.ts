@@ -1,4 +1,4 @@
-import { get_hello } from "./api";
+import { get_hello, post_hello } from "./api";
 
 const state = {
   name: "",
@@ -16,11 +16,7 @@ inputName.oninput = (e: { currentTarget: any }) => {
 const inputAge = document.createElement("input");
 
 inputAge.oninput = (e: { currentTarget: any }) => {
-  let age = Number(e.currentTarget.value);
-  if (isNaN(age)) {
-    age = e.currentTarget.value;
-  }
-  state.age = age;
+  state.age = e.currentTarget.value;
 };
 const button = document.createElement("button");
 button.textContent = "fetch";
@@ -29,9 +25,9 @@ button.onclick = () => {
   get_hello(state).then((res) => {
     console.log("get", res);
   });
-  // post_hello(state).then((res) => {
-  //   console.log("post", res);
-  // });
+  post_hello(state).then((res) => {
+    console.log("post", res);
+  });
 };
 
 box.append(inputName, inputAge, button);

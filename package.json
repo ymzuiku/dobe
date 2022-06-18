@@ -1,13 +1,13 @@
 {
   "name": "dobe",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "umd/index.js",
   "types": "lib/index.ts",
   "exports": {
     "import": "./esm/index.js",
     "require": "./cjs/index.js"
   },
-  "description": "轻量级快速校验数据",
+  "description": "前后端同构接口约定与校验",
   "private": false,
   "scripts": {
     "example:client": "bike example/src/client.ts example/www --browser",
