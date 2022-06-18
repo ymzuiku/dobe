@@ -1,6 +1,7 @@
 import { createFastifyController } from "./createFastifyController";
 import { fetcher } from "./fetcher";
 import { API, APIProps, Controller } from "./types";
+import { yupDtoValidate } from "./yupDtoValidate";
 
 export { fetcher, createFastifyController };
 
@@ -19,7 +20,7 @@ const api = <T, O>({
       throw new Error("Not found fetcher: " + api.url);
     }
     if (requestSchema) {
-      body = dobe.baseDtoValidate!(requestSchema, body);
+      body = await Promise.resolve(dobe.baseDtoValidate!(requestSchema, body));
     }
     const res = await getter(body, api, options);
     if (responseSchema) {
@@ -49,14 +50,10 @@ const use = <T, O>(
   return controller(api, service);
 };
 
-export const sokeDtoValidate = <T, O>(schema: any, body: T): T => {
-  return schema.dto(body);
-};
-
 export const dobe = {
   api,
   use,
-  baseDtoValidate: sokeDtoValidate,
+  baseDtoValidate: yupDtoValidate,
   baseFetcher: fetcher,
   baseController: undefined as Controller | undefined,
 };
