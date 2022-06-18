@@ -36,7 +36,8 @@
     "soke": "^2.1.3",
     "tslib": "^2.4.0",
     "typedoc": "^0.19.2",
-    "typescript": "3.9.6"
+    "typescript": "3.9.6",
+    "yup": "^0.32.11"
   },
   "repository": {
     "type": "git",

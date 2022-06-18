@@ -46,9 +46,18 @@ const api = <T, O>({
     if (!getter) {
       throw new Error("Not found fetcher: " + api.url);
     }
-    const res = await (requestSchema
-      ? getter(api, dobe.baseDtoValidate!(requestSchema, body), init)
-      : getter(api, body, init));
+    try {
+      if (requestSchema) {
+        body = dobe.baseDtoValidate!(requestSchema, body);
+      }
+    } catch (err) {
+      console.log("__debug__1", body);
+      throw err;
+    }
+
+    console.log("__debug__2");
+    const res = await getter(api, body, init);
+    console.log("__debug__4", Object.keys(res));
     if (responseSchema) {
       return dobe.baseDtoValidate!(responseSchema, res);
     }
@@ -112,7 +121,9 @@ export const fetcher = <T, O>(
   };
   if (api.method === "GET") {
     const query = new URLSearchParams(body as never).toString();
-    return fetch(fetcher.baseURL + api.url + query, opt).then(fetchResponse);
+    return fetch(fetcher.baseURL + api.url + "?" + query, opt).then(
+      fetchResponse
+    );
   }
 
   return fetch(fetcher.baseURL + api.url, {
@@ -138,7 +149,7 @@ export const createFastifyController = <T, O>(app: any) => {
   };
 };
 
-export const sokeDtoValidate = <T, O>(schema: any, body: T): T => {
+export const yupDtoValidate = <T, O>(schema: any, body: T): T => {
   return schema.dto(body);
 };
 
@@ -146,7 +157,7 @@ export const dobe = {
   api,
   fetch: fetcher,
   use,
-  baseDtoValidate: sokeDtoValidate,
+  baseDtoValidate: yupDtoValidate,
   baseFetcher: fetcher,
   baseController: undefined as Controller | undefined,
 };

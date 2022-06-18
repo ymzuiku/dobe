@@ -1,4 +1,4 @@
-import { api_hello } from "./api";
+import { get_hello } from "./api";
 
 const state = {
   name: "",
@@ -25,9 +25,13 @@ inputAge.oninput = (e: { currentTarget: any }) => {
 const button = document.createElement("button");
 button.textContent = "fetch";
 button.onclick = () => {
-  api_hello(state).then((res) => {
-    console.log("res", res);
+  console.log("__debug__", state);
+  get_hello(state).then((res) => {
+    console.log("get", res);
   });
+  // post_hello(state).then((res) => {
+  //   console.log("post", res);
+  // });
 };
 
 box.append(inputName, inputAge, button);
