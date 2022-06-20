@@ -67,6 +67,7 @@ export const dobe = {
   use,
   baseDtoValidate: yupDtoValidate,
   baseFetcher: fetcher as Function,
-  onRequireError: undefined as unknown as Function,
+  onRequireError: undefined as Function | undefined,
+  onResponseError: undefined as Function | undefined,
   baseController: undefined as Controller | undefined,
 };
