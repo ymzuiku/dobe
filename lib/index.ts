@@ -20,11 +20,23 @@ const api = <T, O>({
       throw new Error("Not found fetcher: " + api.url);
     }
     if (requestSchema) {
-      body = await Promise.resolve(dobe.baseDtoValidate!(requestSchema, body));
+      try {
+        body = await Promise.resolve(
+          dobe.baseDtoValidate!(requestSchema, body)
+        );
+      } catch (err) {
+        dobe.onRequireError && dobe.onRequireError(err);
+        throw err;
+      }
     }
     const res = await getter(body, api, options);
     if (responseSchema) {
-      return dobe.baseDtoValidate!(responseSchema, res);
+      try {
+        return dobe.baseDtoValidate!(responseSchema, res);
+      } catch (err) {
+        dobe.onResponseError && dobe.onResponseError(err);
+        throw err;
+      }
     }
     return res;
   };
@@ -54,6 +66,7 @@ export const dobe = {
   api,
   use,
   baseDtoValidate: yupDtoValidate,
-  baseFetcher: fetcher,
+  baseFetcher: fetcher as Function,
+  onRequireError: undefined as unknown as Function,
   baseController: undefined as Controller | undefined,
 };
